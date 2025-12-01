@@ -1,4 +1,5 @@
 #include "function.h"
+#include <string.h>
 
 // Cria a estrutura principal da árvore
 BTree* create_tree(int t) {
@@ -36,4 +37,23 @@ BTreeNode* create_node(int is_leaf) {
     }
 
     return node;
+}
+
+int ler_comando_insert(char* linha) {
+    char comando[20];
+    int valor;
+
+    // Tenta separar a linha em texto e número
+    if (sscanf(linha, "%s %d", comando, &valor) == 2) {
+        if (strcmp(comando, "INSERT") == 0) { // Compara a palavra INSERT
+            return valor; // Retorna a chave para inserir
+        }
+    }
+    return -1; // Caso não for o INSERT
+}
+
+int identificar_comando(char* cmd) {
+    if (strcmp(cmd, "INSERT") == 0) return 1;
+    if (strcmp(cmd, "SEARCH") == 0) return 2;
+    return 0; // comando inválido
 }

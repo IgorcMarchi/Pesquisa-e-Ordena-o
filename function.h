@@ -30,5 +30,12 @@ typedef struct {
 BTree* create_tree(int t);
 BTreeNode* create_node(int is_leaf);
 
+// Funções Comandos
+int ler_comando_insert(char* linha); //IGOR
+// JEFF
+
+
+// Para diferenciar os comandos
+int identificar_comando(char* cmd);
 
 #endif
