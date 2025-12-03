@@ -9,6 +9,7 @@ int main() {
     char cmd[10];
     int valor;
 
+    // Cria árvore B de grau 3
     BTree* arvore = create_tree(3);
 
     int escolha;
@@ -16,7 +17,7 @@ int main() {
     printf("Digite 1 para ler o arquivo ou 2 para escrever nele: ");
     scanf("%d", &escolha);
 
-    // ---------------- MODO LEITURA ----------------
+    //MODO LEITURA
     if (escolha == 1) {
 
         arquivo_leitura = fopen("operacoes.txt", "r");
@@ -31,20 +32,33 @@ int main() {
 
             int tipo = ler_comando_insert_search(linha, &valor);
 
-            if (tipo == 1)
+            if (tipo == 1) {
                 printf("[ARQUIVO] INSERT %d\n", valor);
+                btree_insert(arvore, valor);
+            }
+            else if (tipo == 2) {
+                printf("[ARQUIVO] SEARCH %d -> ", valor);
 
-            else if (tipo == 2)
-                printf("[ARQUIVO] SEARCH %d\n", valor);
+                if (arvore->root_id == -1) {
+                    printf("Árvore vazia\n");
+                } else {
+                    BTreeNode* root = (BTreeNode*)arvore->root_id;
 
-            else
+                    if (btree_search(arvore, root, valor))
+                        printf("Encontrado\n");
+                    else
+                        printf("Nao encontrado\n");
+                }
+            }
+            else {
                 printf("[ARQUIVO] Linha inválida: %s\n", linha);
+            }
         }
 
         fclose(arquivo_leitura);
     }
 
-    // ---------------- MODO ESCRITA ----------------
+    //MODO ESCRITA
     else if (escolha == 2) {
 
         arquivo_saida = fopen("operacoes.txt", "a");
@@ -59,12 +73,13 @@ int main() {
         printf("Digite o valor: ");
         scanf("%d", &valor);
 
-        // CORREÇÃO IMPORTANTE  
         int tipo = identificar_comando(cmd);
 
         if (tipo == 1) {
             EscreverInsert(arquivo_saida, valor);
             printf("Gravado: INSERT %d\n", valor);
+
+            btree_insert(arvore, valor);
         }
         else if (tipo == 2) {
             EscreverSearch(arquivo_saida, valor);

@@ -40,5 +40,12 @@ int identificar_comando(char* cmd);
 void EscreverInsert(FILE* f, int valor);
 void EscreverSearch(FILE* f, int valor);
 
+// BUSCA
+int btree_search(BTree* tree, BTreeNode* node, int key);
+
+// INSERÇÃO
+void btree_split_child(BTreeNode* parent, int index, int t);
+void btree_insert_nonfull(BTreeNode* node, int key, int t);
+void btree_insert(BTree* tree, int key);
 
 #endif
