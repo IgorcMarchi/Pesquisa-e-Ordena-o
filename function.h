@@ -30,12 +30,15 @@ typedef struct {
 BTree* create_tree(int t);
 BTreeNode* create_node(int is_leaf);
 
-// Funções Comandos
-int ler_comando_insert(char* linha); //IGOR
-// JEFF
+// Leitura de linha com INSERT x ou SEARCH x
+int ler_comando_insert_search(char* linha, int* valor);
 
-
-// Para diferenciar os comandos
+// Identifica comando isolado (modo escrita)
 int identificar_comando(char* cmd);
+
+// Escrita no arquivo
+void EscreverInsert(FILE* f, int valor);
+void EscreverSearch(FILE* f, int valor);
+
 
 #endif
