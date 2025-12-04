@@ -3,30 +3,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-// --- CONSTANTES ---
-// MAX_ORDER define o tamanho fixo da struct no disco.
 #define MAX_ORDER 20 
-
-// --- ESTRUTURAS DE DADOS ---
+#define MAX_PAGES 1000
 
 typedef struct {
-    int page_id;                    // ID único desta página no arquivo (0, 1, 2...)
-    int num_keys;                   // Quantas chaves estão ocupadas no momento
-    int is_leaf;                    // 1 se for folha, 0 se não for
-    int keys[2 * MAX_ORDER - 1];    // Vetor de chaves
-    int children[2 * MAX_ORDER];    // Vetor de IDs dos filhos (links para outras páginas)
+    int page_id;                    // ID unico desta pagina
+    int num_keys;                   // Numero de chaves ocupadas
+    int is_leaf;                    
+    int keys[2 * MAX_ORDER - 1];    
+    int children[2 * MAX_ORDER];    // IDs dos filhos
 } BTreeNode;
 
-// 2. A Árvore (Metadados na RAM)
+// Metadados da arvore em RAM
 typedef struct {
-    int root_id;    // ID da página onde está a raiz (-1 se a árvore estiver vazia)
-    int t;          // O grau mínimo 't' escolhido pelo usuário
+    int root_id;    // ID da pagina da raiz (-1 se vazia)
+    int t;          // Grau minimo
 } BTree;
 
-// --- PROTÓTIPOS (Funções Disponíveis) ---
+// Simulacao do disco
+extern BTreeNode* disk[MAX_PAGES];
+extern int NUM_PAGES;       // Numero de paginas usadas
+extern int CONTA_LEITURA;   // Contador de leituras
+extern int CONTA_ESCRITA;   // Contador de escritas
 
-// Funções do JOSÉ (Estrutura)
 BTree* create_tree(int t);
 BTreeNode* create_node(int is_leaf);
 
@@ -40,12 +41,20 @@ int identificar_comando(char* cmd);
 void EscreverInsert(FILE* f, int valor);
 void EscreverSearch(FILE* f, int valor);
 
-// BUSCA
-int btree_search(BTree* tree, BTreeNode* node, int key);
+// OPERACOES DE DISCO
+BTreeNode* disk_read(int node_id);
+void disk_write(int node_id);
+int create_node_in_disk(int is_leaf);
 
-// INSERÇÃO
-void btree_split_child(BTreeNode* parent, int index, int t);
-void btree_insert_nonfull(BTreeNode* node, int key, int t);
+// BUSCA
+int btree_search(BTree* tree, int node_id, int key);
+
+// INSERCAO
+void btree_split_child(int parent_id, int index, int t);
+void btree_insert_nonfull(int node_id, int key, int t);
 void btree_insert(BTree* tree, int key);
+
+// IMPRESSAO
+void imprimir_arvore(int node_id, int nivel);
 
 #endif
