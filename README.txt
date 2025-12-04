@@ -123,8 +123,3 @@ OBSERVACOES IMPORTANTES
    - SEARCH nao causa escritas
    - INSERT pode causar multiplas escritas (splits)
 
-4. Sem acentuacao no codigo
-   - Compatibilidade total com compiladores C
-   - Output legivel em qualquer sistema
-
----
