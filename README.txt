@@ -128,17 +128,3 @@ OBSERVACOES IMPORTANTES
    - Output legivel em qualquer sistema
 
 ---
-
-PROXIMOS PASSOS OPCIONAIS
-==========================
-
-1. Adicionar persistencia em arquivo real
-2. Implementar REMOVE (delecao de chaves)
-3. Exportar relatorio de I/O para CSV
-4. Teste de stress com milhares de chaves
-5. Comparacao com outras estruturas (ABB, Hash, etc)
-
----
-
-Projeto completado com sucesso!
-Codigo pronto para pesquisa academica.
